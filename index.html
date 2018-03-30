@@ -1,0 +1,32 @@
+<html>
+<head>
+  <style>
+    .photo {
+      float: left;
+      width: 500px;
+      text-align: center;
+    }
+
+    .photo img {
+      max-width: 500px;
+      max-height: 280px;
+
+    }
+  </style>
+</head>
+<body>
+<div class="photos"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    $.getJSON("https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=53b558787aca514ca3822a12f202623c&per_page=6&format=json&nojsoncallback=1&auth_token=72157665196698427-0cdb93085af27da0&api_sig=41c2c0c8afc90a74dc9ef0f1821e31c8", function (data) {
+        data = data.photos;
+        $.each(data.photo, function (keys, image) {
+            image_src = 'http://farm' + image.farm + '.staticflickr.com/' + image.server + '/' + image.id + '_' + image.secret + '.jpg';
+
+            $("<div>", {class: "photo"}).append('<img id="theImg" src="' + image_src + '" /><br>' + image.title).appendTo('.photos');
+
+        });
+    });
+</script>
+</body>
+</html>
